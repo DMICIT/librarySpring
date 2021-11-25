@@ -1,5 +1,7 @@
 package com.project.entities;
 
+import com.project.enums.BookSpot;
+import com.project.enums.Status;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,9 +26,9 @@ public class Order {
     private Book book;
 
     @Enumerated(EnumType.STRING)
-    private String bookSpot;
+    private BookSpot bookSpot;
     @Enumerated(EnumType.STRING)
-    private String status;
+    private Status status;
 
     @Column(columnDefinition = "DATE")
     private LocalDate returnDate;
