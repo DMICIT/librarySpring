@@ -68,11 +68,11 @@
         <div class="dropdown">
             <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                data-bs-toggle="dropdown" aria-expanded="false">
-                ${locale}
+                ${pageContext.response.locale}
             </a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <li><a class="dropdown-item" href="language?locale=en">EN</a></li>
-                <li><a class="dropdown-item" href="language?locale=ru">RU</a></li>
+                <li><a class="dropdown-item" href="?lang=en">EN</a></li>
+                <li><a class="dropdown-item" href="?lang=ru">RU</a></li>
             </ul>
         </div>
     </header>
