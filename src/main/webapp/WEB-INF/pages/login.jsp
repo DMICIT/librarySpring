@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--<%@ taglib prefix="custom" tagdir="/WEB-INF/tags" %>--%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 
 <html>
 
@@ -26,20 +28,20 @@
     <h2><spring:message code="login.login.form"/></h2>
     </br>
     </br>
-    <form action="login" method="post">
+    <form:form action="/login" method="post" modelAttribute="loginForm">
 
         <div class="mb-3">
-            <label for="email" class="form-label"><spring:message code="login.email"/></label>
-            <input type="text" class="form-control" id="email" name="email">
+            <form:label path="email" class="form-label"><spring:message code="login.email"/></form:label>
+            <form:input type="text" class="form-control" path="email"/>
         </div>
 
         <div class="mb-3">
-            <label for="password" class="form-label"><spring:message code="login.password"/></label>
-            <input type="password" class="form-control" id="password" name="password">
+            <form:label path="password" class="form-label"><spring:message code="login.password"/></form:label>
+            <form:input type="password" class="form-control" path="password" />
         </div>
 
         <button class="btn btn-primary" type="submit"><spring:message code="login.login"/></button>
-    </form>
+    </form:form>
 
 <%--    <custom:tags errorMessages="${errorMessages}" bundle="${bundle}" locale="${locale}"></custom:tags>--%>
 </div>

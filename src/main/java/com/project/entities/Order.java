@@ -27,12 +27,14 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     private BookSpot bookSpot;
+
     @Enumerated(EnumType.STRING)
     private Status status;
 
     @Column(columnDefinition = "DATE")
     private LocalDate returnDate;
-    @Column
+
+    @Column(name="penalty")
     private String penalty;
 
 

@@ -29,16 +29,16 @@ INSERT INTO books (author, book_name, book_edition, release_date) VALUE ('Мих
 INSERT INTO books (author, book_name, book_edition, release_date) VALUE (' The Great Gatsby', 'F. Scott Fitzgerald', 'Jazz Age', '1990-12-13');
 INSERT INTO books (author, book_name, book_edition, release_date) VALUE ('Herman Melville', 'Moby Dick', 'American Edition', '1850-12-31');
 
-INSERT INTO users ( name, email, gender, phone, role, ban_list, password) VALUES ('admin', 'admin@gmail.com', 'man', '777', 'admin', 0, 'admin');
-INSERT INTO users ( name, email, gender, phone, role, ban_list, password) VALUES ( 'librarian', 'librarian@text.com', 'man', '12345', 'librarian', 0, 'librarian1');
-INSERT INTO users ( name, email, gender, phone, role, ban_list, password) VALUES ('user1', 'user1@test.com', 'woman', '12345', 'user', 0, 'user1');
-INSERT INTO users ( name, email, gender, phone, role, ban_list, password) VALUES ('user2', 'user2@test.com', 'man', '12345', 'user', 0, 'user2');
+INSERT INTO users ( name, email, gender, phone, role, ban_list, password) VALUES ('admin', 'admin@gmail.com', 'MAN', '777', 'ADMIN', 0, 'admin');
+INSERT INTO users ( name, email, gender, phone, role, ban_list, password) VALUES ( 'librarian', 'librarian@text.com', 'MAN', '12345', 'LIBRARIAN', 0, 'librarian1');
+INSERT INTO users ( name, email, gender, phone, role, ban_list, password) VALUES ('user1', 'user1@test.com', 'WOMAN', '12345', 'USER', 0, 'user1');
+INSERT INTO users ( name, email, gender, phone, role, ban_list, password) VALUES ('user2', 'user2@test.com', 'MAN', '12345', 'USER', 0, 'user2');
 
 INSERT INTO catalog ( book_id, count) VALUES ( 1, 32);
 INSERT INTO catalog ( book_id, count) VALUES ( 2, 20);
 INSERT INTO catalog ( book_id, count) VALUES ( 21, 11);
 
 
-INSERT INTO orders (book_id,user_id, book_spot, status, return_date) VALUES ( 2, 2, 'abonement', 'checked out', '2021-12-11');
+INSERT INTO orders (book_id,user_id, book_spot, status, return_date) VALUES ( 2, 2, 'ABONEMENT', 'CHECKED_OUT', '2021-12-11');
 
 

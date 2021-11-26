@@ -16,23 +16,25 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column
+    @Column(name="name")
     private String name;
-    @Column
+
+    @Column(name="email")
     private String email;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @Column
+    @Column(name="phone")
     private String phone;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column
+    @Column(name="ban_list")
     private boolean banList;
-    @Column
+
+    @Column(name="password")
     private String password;
 
 

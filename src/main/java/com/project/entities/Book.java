@@ -16,12 +16,15 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column
+    @Column(name="author")
     private String author;
-    @Column
+
+    @Column(name="book_name")
     private String bookName;
-    @Column
+
+    @Column(name="book_edition")
     private String bookEdition;
+
     @Column(columnDefinition = "DATE")
     private LocalDate releaseDate;
 

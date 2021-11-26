@@ -17,7 +17,8 @@ public class Catalog {
     @OneToOne
     @JoinColumn(name="book_id")
     private Book book;
-    @Column
+
+    @Column(name="count")
     private int count;
 
 }
