@@ -1,11 +1,16 @@
 package com.project.services;
 
+import com.project.data.UserPrincipal;
+import com.project.entities.Book;
 import com.project.entities.Order;
+import com.project.entities.User;
+import com.project.enums.BookSpot;
 import com.project.enums.Status;
 import com.project.repositories.OrderRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +32,23 @@ public class OrderService {
         return allOrdersByUsersId;
     }
 
-    public void create(Order order){
+    public void create(int bookId, UserPrincipal userPrincipal, BookSpot bookSpot){
+
+        Book book = new Book();
+        book.setId(bookId);
+
+        User userByEmail = userService.getUserByEmail(userPrincipal.getEmail());
+        LocalDate returnDate = null;
+
+        if (bookSpot.equals(BookSpot.ABONEMENT)) {
+            returnDate = LocalDate.now().plusMonths(1);
+        }
+        if (bookSpot.equals(BookSpot.LIBRARY_HALL)) {
+            returnDate = LocalDate.now().plusDays(1);
+        }
+
+        Order order = new Order(0, userByEmail, book, bookSpot, Status.EXPECTED, returnDate);
+
        orderRepository.save(order);
     }
 

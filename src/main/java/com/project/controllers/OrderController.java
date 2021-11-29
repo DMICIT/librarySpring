@@ -52,22 +52,8 @@ public class OrderController {
         }
         int bookId = Integer.parseInt(request.getParameter("bookId"));
         BookSpot bookSpot = BookSpot.valueOf(request.getParameter("action"));
-        //TODO move to Orders Service.create()
-        Book book = new Book();
-        book.setId(bookId);
 
-        User userByEmail = userService.getUserByEmail(userPrincipal.getEmail());
-        LocalDate returnDate = null;
-
-        if (bookSpot.equals(BookSpot.ABONEMENT)) {
-            returnDate = LocalDate.now().plusMonths(1);
-        }
-        if (bookSpot.equals(BookSpot.LIBRARY_HALL)) {
-            returnDate = LocalDate.now().plusDays(1);
-        }
-
-        Order order = new Order(0, userByEmail, book, bookSpot, Status.EXPECTED, returnDate);
-        orderService.create(order);
+        orderService.create(bookId,userPrincipal,bookSpot);
 
         return "redirect:orders";
     }
