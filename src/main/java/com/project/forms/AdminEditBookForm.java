@@ -30,7 +30,7 @@ public class AdminEditBookForm {
 
     @NotNull
     @Pattern(regexp = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))")
-    private String reliaseDate;
+    private String releaseDate;
 
     private int count;
 

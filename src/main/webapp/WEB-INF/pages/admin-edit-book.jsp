@@ -1,10 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="custom" tagdir="/WEB-INF/tags" %>
-<fmt:setLocale value="${locale}"></fmt:setLocale>
-<fmt:setBundle basename="${bundle}"></fmt:setBundle>
-<c:set var="contextPath" value = "${pageContext.request.contextPath}"/>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <html>
 
 <head>
@@ -20,35 +18,41 @@
 <c:import url="components/header.jsp"/>
 <div class="container">
 
-    <h2><fmt:message key="books.header"/></h2>
+    <h2><spring:message code="books.header"/></h2>
 
-    <form action="admin-edit-book${not empty book.id ? '?id=' += book.id : ''}" method="post" id="bookForm" role ="form">
-<%--        <c:if test ="${empty action}">--%>
-<%--            <c:set var="action" value="add"/>--%>
-<%--        </c:if>--%>
+    <form:form action="admin-edit-book${not empty book.id ? '?id=' += book.id : ''}" method="post" id="bookForm" role ="form" modelAttribute = "adminEditBookForm">
+
         <input type="hidden" id ="bookId" name ="bookId" value="${book.id}">
-<%--        <input type="hidden" id ="action" name ="action" value="${action}">--%>
 
         <div class ="form-group col-xs-4">
-            <label for="author" class="control-label col-xs-4"><fmt:message key="books.author"/></label>
-            <input type = "text" name="author" id = "author" class="form-control" value ="${book.author}" required>
+            <form:label path="author" class="control-label col-xs-4"><spring:message code="books.author"/></form:label>
+            <form:input type = "text" path = "author" class="form-control" value ="${book.author}" required="true"/>
+            <form:errors path="author" cssClass="text-danger"/>
 
-            <label for="bookName" class="control-label col-xs-4"><fmt:message key="books.book.name"/></label>
-            <input type = "text" name="bookName" id = "bookName" class="form-control" value ="${book.bookName}" required>
 
-            <label for="bookEdition" class="control-label col-xs-4"><fmt:message key="books.edition"/></label>
-            <input type = "text" name="bookEdition" id = "bookEdition" class="form-control" value ="${book.bookEdition}" required>
+            <form:label path="bookName" class="control-label col-xs-4"><spring:message code="books.book.name"/></form:label>
+            <form:input type = "text" path = "bookName" class="form-control" value ="${book.bookName}" required="true"/>
+            <form:errors path="bookName" cssClass="text-danger"/>
 
-            <label for="releaseDate" class="control-label col-xs-4"><fmt:message key="books.date.of.reliase"/></label>
-            <input type = "text" name="releaseDate" id = "releaseDate" class="form-control" value ="${book.releaseDate}" required>
 
-            <label for="count" class="control-label col-xs-4"><fmt:message key="count"/></label>
-            <input type = "text" name="count" id = "count" class="form-control" value ="${book.catalogData.totalQuantity}" required>
+            <form:label path="bookEdition" class="control-label col-xs-4"><spring:message code="books.edition"/></form:label>
+            <form:input type = "text" path = "bookEdition" class="form-control" value ="${book.bookEdition}" required="true"/>
+            <form:errors path="bookEdition" cssClass="text-danger"/>
+
+
+            <form:label path="releaseDate" class="control-label col-xs-4"><spring:message code="books.date.of.reliase"/></form:label>
+            <form:input type = "text" path = "releaseDate" class="form-control" value ="${book.releaseDate}" required="true"/>
+            <form:errors path="releaseDate" cssClass="text-danger"/>
+
+
+            <form:label path="count" class="control-label col-xs-4"><spring:message code="count"/></form:label>
+            <form:input type = "text" path = "count" class="form-control" value ="${book.catalogData.totalQuantity}" required="true"/>
+            <form:errors path="count" cssClass="text-danger"/>
+
             </br>
             <button type="submit" class="btn btn-primary btn-md">Accept</button>
         </div>
-    </form>
-    <custom:tags errorMessages="${errorMessages}" bundle="${bundle}" locale="${locale}"></custom:tags>
+    </form:form>
 
 </div>
 <c:import url="components/footer.jsp"/>

@@ -1,5 +1,6 @@
 package com.project.controllers;
 
+import com.project.data.BookData;
 import com.project.entities.Book;
 import com.project.entities.User;
 import com.project.enums.Role;
@@ -30,7 +31,7 @@ public class AdminController {
 
     @GetMapping(value = "/admin-books")
     public String adminGetBook(HttpServletRequest request) {
-        List<Book> books = bookService.findAllBooks();
+        List<BookData> books = bookService.findAllBooks();
         request.setAttribute("adminBooks", books);
         return "admin-books";
     }
@@ -46,21 +47,21 @@ public class AdminController {
     }
 
     @GetMapping(value = "/admin-edit-book")
-    public String adminBookEdit(HttpServletRequest request) {
+    public String adminBookEdit(HttpServletRequest request, AdminEditBookForm adminEditBookForm) {
         String id = request.getParameter("id");
         if (id != null) {
             int bookId = Integer.parseInt(id);
-            Book book = bookService.getBookById(bookId);
+            BookData book = bookService.getBookById(bookId);
             request.setAttribute("book", book);
             request.setAttribute("action", "edit");
         }
         return "admin-edit-book";
     }
 
-    @PostMapping(value = "/admin-edit-books")
+    @PostMapping(value = "/admin-edit-book")
     public String adminEditBook(HttpServletRequest request, @Valid @ModelAttribute AdminEditBookForm form) {
         if (form.getBookId() != 0) {
-            Book book = bookService.getBookById(form.getBookId());
+            BookData book = bookService.getBookById(form.getBookId());
             request.setAttribute("book", book);
         }
         bookService.editBook(form);

@@ -1,5 +1,5 @@
 package com.project.controllers;
-import com.project.entities.Book;
+import com.project.data.BookData;
 import com.project.services.BookService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +16,7 @@ public class BookController {
 
     @GetMapping(value = "/books")
     public String bookPage(Model model) {
-        List<Book> books = bookService.findAllBooks();
+        List<BookData> books = bookService.findAllBooks();
         model.addAttribute("books",books);
         return "books";
     }

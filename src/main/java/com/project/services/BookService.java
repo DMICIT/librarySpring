@@ -1,5 +1,7 @@
 package com.project.services;
 
+import com.project.data.BookData;
+import com.project.data.CatalogData;
 import com.project.entities.Book;
 import com.project.entities.Catalog;
 import com.project.forms.AdminEditBookForm;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,23 +24,25 @@ public class BookService {
     @Resource
     private BookRepository bookRepository;
 
-    public List<Book> findAllBooks() {
-        return bookRepository.findAll();
+    public List<BookData> findAllBooks() {
+        List<Book> allBooks = bookRepository.findAll();
+        return getBookDataList(allBooks);
     }
 
     public void deleteBook(Book book) {
         bookRepository.delete(book);
     }
 
-    public Book getBookById(int id) {
+    public BookData getBookById(int id) {
         Optional<Book> bookById = bookRepository.findById(id);
-        return bookById.get();
+        return getBookData(bookById.get());
     }
+
 
     public void editBook(AdminEditBookForm form) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
-        LocalDate date = LocalDate.parse(form.getReliaseDate(), formatter);
+        LocalDate date = LocalDate.parse(form.getReleaseDate(), formatter);
 
         Book book = new Book(form.getBookId(), form.getAuthor(), form.getBookName(), form.getBookEdition(), date);
         bookRepository.save(book);
@@ -51,4 +56,22 @@ public class BookService {
         catalogRepository.save(catalogByBookId);
     }
 
+    private List<BookData> getBookDataList(List<Book> books) {
+        List<BookData> result = new ArrayList<>();
+        for (Book book : books) {
+            BookData bookData = getBookData(book);
+            result.add(bookData);
+        }
+        return result;
+    }
+
+    private BookData getBookData(Book book) {
+
+        Catalog catalogByBookId = catalogRepository.findCatalogByBookId(book.getId());
+        CatalogData catalogData = new CatalogData();
+        if (catalogByBookId != null) {
+            catalogData.setTotalQuantity(catalogByBookId.getCount());
+        }
+        return new BookData(book.getId(), book.getAuthor(), book.getBookName(), book.getBookEdition(), book.getReleaseDate(), catalogData);
+    }
 }
