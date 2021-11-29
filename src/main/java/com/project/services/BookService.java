@@ -7,6 +7,9 @@ import com.project.entities.Catalog;
 import com.project.forms.AdminEditBookForm;
 import com.project.repositories.BookRepository;
 import com.project.repositories.CatalogRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -24,9 +27,36 @@ public class BookService {
     @Resource
     private BookRepository bookRepository;
 
-    public List<BookData> findAllBooks() {
-        List<Book> allBooks = bookRepository.findAll();
-        return getBookDataList(allBooks);
+    public Page<BookData> findAllBooks(Pageable pageable) {
+        Page<Book> pageForAllBooks = bookRepository.findAll(pageable);
+        Page<BookData> bookDataPage = pageForAllBooks.map(this::getBookData);
+        return  bookDataPage;
+    }
+
+    public Page<BookData> findAllBooks(String search, Pageable pageable) {
+        Page<Book> allBooks = bookRepository.findByAuthorContainsOrBookNameContains(search,search, pageable);
+        Page<BookData> allDataPage = allBooks.map(this::getBookData);
+        return allDataPage;
+    }
+
+
+    private List<BookData> getBookDataList(List<Book> books) {
+        List<BookData> result = new ArrayList<>();
+        for (Book book : books) {
+            BookData bookData = getBookData(book);
+            result.add(bookData);
+        }
+        return result;
+    }
+
+    private BookData getBookData(Book book) {
+
+        Catalog catalogByBookId = catalogRepository.findCatalogByBookId(book.getId());
+        CatalogData catalogData = new CatalogData();
+        if (catalogByBookId != null) {
+            catalogData.setTotalQuantity(catalogByBookId.getCount());
+        }
+        return new BookData(book.getId(), book.getAuthor(), book.getBookName(), book.getBookEdition(), book.getReleaseDate(), catalogData);
     }
 
     public void deleteBook(Book book) {
@@ -64,24 +94,5 @@ public class BookService {
         }
         catalogByBookId.setCount(form.getCount());
         catalogRepository.save(catalogByBookId);
-    }
-
-    private List<BookData> getBookDataList(List<Book> books) {
-        List<BookData> result = new ArrayList<>();
-        for (Book book : books) {
-            BookData bookData = getBookData(book);
-            result.add(bookData);
-        }
-        return result;
-    }
-
-    private BookData getBookData(Book book) {
-
-        Catalog catalogByBookId = catalogRepository.findCatalogByBookId(book.getId());
-        CatalogData catalogData = new CatalogData();
-        if (catalogByBookId != null) {
-            catalogData.setTotalQuantity(catalogByBookId.getCount());
-        }
-        return new BookData(book.getId(), book.getAuthor(), book.getBookName(), book.getBookEdition(), book.getReleaseDate(), catalogData);
     }
 }

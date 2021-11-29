@@ -31,22 +31,22 @@
             <form:label path="name" class="control-label col-xs-4"><spring:message code="users.name"/></form:label>
             <form:input type="text" path="name" class="form-control" required="true"/>
             <form:errors path="name" cssClass="text-danger"/>
-
+            </br>
 
             <form:label path="email" class="control-label col-xs-4"><spring:message code="users.email"/></form:label>
             <form:input type="text" path="email"  class="form-control" required="true"/>
             <form:errors path="email" cssClass="text-danger"/>
-
+            </br>
 
             <form:label path="gender" class="control-label col-xs-4"><spring:message code="users.sex"/></form:label>
             <form:input type="text" path="gender" class="form-control" required="true"/>
             <form:errors path="gender" cssClass="text-danger"/>
-
+            </br>
 
             <form:label path="phone" class="control-label col-xs-4"><spring:message code="users.phone"/></form:label>
             <form:input type="text" path="phone" class="form-control" required="true"/>
             <form:errors path="phone" cssClass="text-danger"/>
-
+            </br>
 
             <form:label path="password" class="control-label col-xs-4"><spring:message code="users.password"/></form:label>
             <form:input type="text" path="password"  class="form-control" required="true"/>

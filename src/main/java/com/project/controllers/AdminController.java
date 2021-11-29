@@ -10,6 +10,10 @@ import com.project.services.BookService;
 import com.project.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,8 +37,29 @@ public class AdminController {
 
     @GetMapping(value = "/admin-books")
     public String adminGetBook(HttpServletRequest request) {
-        List<BookData> books = bookService.findAllBooks();
-        request.setAttribute("adminBooks", books);
+
+
+        String sortParam = "id";
+        String order = "asc";
+        int pageSize = 7;
+        int page = 1;
+
+        if (request.getParameter("sort") != null){
+            sortParam = request.getParameter("sort");
+        }
+        if (request.getParameter("order") != null){
+            order= request.getParameter("order");
+        }
+
+        Sort sort = Sort.by(Sort.Direction.fromString(order), sortParam);
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+
+        Pageable pageable = PageRequest.of(page, pageSize ,sort);
+        Page<BookData> books = bookService.findAllBooks(pageable);
+        request.setAttribute("booksData", books);
+
         return "admin-books";
     }
 

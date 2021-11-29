@@ -35,7 +35,7 @@
     </form>
 
     <c:choose>
-    <c:when test="${not empty books}">
+    <c:when test="${not empty booksData}">
 
     <form action="orders" method="post" id="bookForm" role="form">
         <input type="hidden" id="bookId" name="bookId">
@@ -49,7 +49,7 @@
                     <a style="text-decoration: none;"
                        href="books?sort=author${not empty param.search ? '&search=' += param.search  : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9650;</a>
                     <a style="text-decoration: none;"
-                       href="books?sort=author&order=desc${not empty param.search ? '&search' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
+                       href="books?sort=author&order=desc${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
                 </td>
                 <td><spring:message code="books.book.name"/>
                     <a style="text-decoration: none;"
@@ -75,7 +75,7 @@
             </tr>
             </thead>
 
-            <c:forEach items="${books}" var="book" varStatus="loop">
+            <c:forEach items="${booksData.content}" var="book" varStatus="loop">
                 <tr>
                     <td>${loop.count}</td>
                     <td>${book.author}</td>
@@ -101,27 +101,27 @@
             </c:forEach>
         </table>
 
-        <c:if test="${currentPage !=1}">
-        <a href="books?page=${currentPage-1}${not empty param.search ? '&search=' += param.search : ''}${not empty param.sort ? '&sort=' += param.sort : ''}${not empty param.order ? '&order=' += param.order : ''}">
+        <c:if test="${ booksData.pageable.pageNumber != 0}">
+        <a href="books?page=${booksData.pageable.pageNumber -1}${not empty param.search ? '&search=' += param.search : ''}${not empty param.sort ? '&sort=' += param.sort : ''}${not empty param.order ? '&order=' += param.order : ''}">
             <spring:message code="previous"/>
         </a>
         </c:if>
 
-        <c:forEach begin="1" end="${numberOfPages}" var="i">
+        <c:forEach begin="0" end="${booksData.totalPages -1}" var="i">
         <c:choose>
-        <c:when test="${currentPage eq i}">
-            ${i}
+        <c:when test="${booksData.pageable.pageNumber  eq i}">
+            ${i+1}
         </c:when>
         <c:otherwise>
         <a href="books?page=${i}${not empty param.search ? '&search=' += param.search : ''}${not empty param.sort ? '&sort=' += param.sort : ''}${not empty param.order ? '&order=' += param.order : ''}">
-                ${i}
+                ${i+1}
         </a>
         </c:otherwise>
         </c:choose>
         </c:forEach>
 
-        <c:if test="${currentPage lt numberOfPages}">
-        <a href="books?page=${currentPage+1}${not empty param.search ? '&search=' += param.search : ''}${not empty param.sort ? '&sort=' += param.sort : ''}${not empty param.order ? '&order=' += param.order : ''}">
+        <c:if test="${booksData.pageable.pageNumber  lt booksData.totalPages -1}">
+        <a href="books?page=${booksData.pageable.pageNumber +1}${not empty param.search ? '&search=' += param.search : ''}${not empty param.sort ? '&sort=' += param.sort : ''}${not empty param.order ? '&order=' += param.order : ''}">
             <spring:message code="next"/>
         </a>
 

@@ -64,7 +64,7 @@
         </tr>
         </thead>
 
-        <c:forEach items="${adminBooks}" var="book">
+        <c:forEach items="${booksData.content}" var="book">
             <tr>
                 <td><a href="admin-edit-book?id=${book.id}">${book.id}</a></td>
                 <td>${book.author}</td>
@@ -81,6 +81,32 @@
             </tr>
         </c:forEach>
     </table>
+
+<c:if test="${ booksData.pageable.pageNumber != 0}">
+    <a href="admin-books?page=${booksData.pageable.pageNumber -1}${not empty param.search ? '&search=' += param.search : ''}${not empty param.sort ? '&sort=' += param.sort : ''}${not empty param.order ? '&order=' += param.order : ''}">
+        <spring:message code="previous"/>
+    </a>
+</c:if>
+
+<c:forEach begin="0" end="${booksData.totalPages -1}" var="i">
+    <c:choose>
+        <c:when test="${booksData.pageable.pageNumber  eq i}">
+            ${i+1}
+        </c:when>
+        <c:otherwise>
+            <a href="admin-books?page=${i}${not empty param.search ? '&search=' += param.search : ''}${not empty param.sort ? '&sort=' += param.sort : ''}${not empty param.order ? '&order=' += param.order : ''}">
+                    ${i+1}
+            </a>
+        </c:otherwise>
+    </c:choose>
+</c:forEach>
+
+<c:if test="${booksData.pageable.pageNumber  lt booksData.totalPages -1}">
+    <a href="admin-books?page=${booksData.pageable.pageNumber +1}${not empty param.search ? '&search=' += param.search : ''}${not empty param.sort ? '&sort=' += param.sort : ''}${not empty param.order ? '&order=' += param.order : ''}">
+    <spring:message code="next"/>
+    </a>
+</c:if>
+
 </form>
 <a href="admin-edit-book" class="btn btn-primary btn-md"><spring:message code="new.book"/></a>
 </div>
