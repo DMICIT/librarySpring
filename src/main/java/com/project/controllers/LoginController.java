@@ -35,6 +35,9 @@ public class LoginController {
     public String loginUser(HttpServletRequest request, @Valid @ModelAttribute LoginForm loginForm, BindingResult errors){
 
         LOG.info("Form: {}, errors: {}", loginForm, errors);
+        if (errors.hasErrors()){
+            return "login";
+        }
         User userByEmail = userService.getUserByEmail(loginForm.getEmail());
 
         if (userByEmail == null) {
@@ -57,7 +60,4 @@ public class LoginController {
 
     }
 
-    private LoginForm getLoginForm(HttpServletRequest request) {
-        return new LoginForm(request.getParameter("email"), request.getParameter("password"));
-    }
 }

@@ -33,11 +33,14 @@
         <div class="mb-3">
             <form:label path="email" class="form-label"><spring:message code="login.email"/></form:label>
             <form:input type="text" class="form-control" path="email"/>
+            <form:errors path="email" cssClass="text-danger"/>
         </div>
 
         <div class="mb-3">
             <form:label path="password" class="form-label"><spring:message code="login.password"/></form:label>
             <form:input type="password" class="form-control" path="password" />
+            <form:errors path="password" cssClass="text-danger"/>
+
         </div>
 
         <button class="btn btn-primary" type="submit"><spring:message code="login.login"/></button>

@@ -27,11 +27,15 @@ public class RegistrationController {
 
     @PostMapping(value= "/registration")
     public String userRegistration(HttpServletRequest request, @Valid @ModelAttribute RegistrationForm registrationForm ,BindingResult errors){
+        //TODO add form validation as in LoginController
+
         User userByEmail = userService.getUserByEmail(registrationForm.getEmail());
         if(userByEmail == null) {
             userService.createUserfromForm(registrationForm, Role.USER);
             return "redirect:login";
         }
+
+        errors.reject("user.exist.error");
         return "registration";
     }
 }

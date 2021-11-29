@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name="orders")
-@Getter @Setter @ToString @EqualsAndHashCode @NoArgsConstructor
+@Getter @Setter @ToString @EqualsAndHashCode @NoArgsConstructor  @AllArgsConstructor
 
 public class Order {
 
@@ -33,9 +33,6 @@ public class Order {
 
     @Column(columnDefinition = "DATE")
     private LocalDate returnDate;
-
-    @Column(name="penalty")
-    private String penalty;
 
 
 }

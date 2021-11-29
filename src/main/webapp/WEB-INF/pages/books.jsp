@@ -66,9 +66,9 @@
                 </td>
                 <td><spring:message code="books.date.of.reliase"/>
                     <a style="text-decoration: none;"
-                       href="books?sort=reliaseDate${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9650;</a>
+                       href="books?sort=releaseDate${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9650;</a>
                     <a style="text-decoration: none;"
-                       href="books?sort=reliaseDate&order=desc${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
+                       href="books?sort=releaseDate&order=desc${not empty param.search ? '&search=' += param.search : ''}${not empty param.page ? '&page=' += param.page : ''}">&#9660;</a>
                 </td>
                 <td></td>
                 <td></td>
