@@ -20,7 +20,7 @@
 <c:import url="components/header.jsp"/>
 <div class="container">
 
-<h2>${user.userName}</h2>
+<h2>${userAbonement.name}</h2>
 
 
 <table class="table">
@@ -42,23 +42,23 @@
     <tr>
 
         <td>${order.id}</td>
-        <td>${order.bookData.bookName}</td>
-        <td>${order.bookData.author}</td>
-        <td> <c:if test="${order.bookSpot eq 'abonement'}">
+        <td>${order.book.bookName}</td>
+        <td>${order.book.author}</td>
+        <td> <c:if test="${order.bookSpot == 'ABONEMENT'}">
             <spring:message code="abonement"/>
         </c:if>
-            <c:if test="${order.bookSpot eq 'library hall'}">
+            <c:if test="${order.bookSpot == 'LIBRARY_HALL'}">
                 <spring:message code="library.hall"/>
             </c:if></td>
         <td>${order.returnDate}</td>
         <td>
-            <c:if test="${order.status eq 'expected'}">
+            <c:if test="${order.status == 'EXPECTED'}">
                 <spring:message code="expected"/>
             </c:if>
-            <c:if test="${order.status eq 'checked out'}">
+            <c:if test="${order.status == 'CHECKED_OUT'}">
                 <spring:message code="checked.out"/>
             </c:if>
-            <c:if test="${order.status eq 'returned'}">
+            <c:if test="${order.status == 'RETURNED'}">
                 <spring:message code="returned"/>
             </c:if>
         </td>

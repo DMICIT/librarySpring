@@ -34,8 +34,8 @@ public class BookService {
     }
 
     public BookData getBookById(int id) {
-        Optional<Book> bookById = bookRepository.findById(id);
-        return getBookData(bookById.get());
+        Book bookById = bookRepository.getById(id);
+        return getBookData(bookById);
     }
 
 
@@ -43,8 +43,13 @@ public class BookService {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date = LocalDate.parse(form.getReleaseDate(), formatter);
+        Book book;
 
-        Book book = new Book();
+        if (form.getBookId()!= 0){
+            book = bookRepository.getById(form.getBookId());
+        }else{
+            book = new Book();
+        }
         book.setId(form.getBookId());
         book.setBookEdition(form.getBookEdition());
         book.setBookName(form.getBookName());

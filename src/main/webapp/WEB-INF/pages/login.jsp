@@ -42,6 +42,8 @@
             <form:errors path="password" cssClass="text-danger"/>
 
         </div>
+            <form:errors element="formErrors" cssClass="text-danger"/>
+        <br/>
 
         <button class="btn btn-primary" type="submit"><spring:message code="login.login"/></button>
     </form:form>

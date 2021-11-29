@@ -83,15 +83,15 @@
                     <td>${book.bookEdition}</td>
                     <td>${book.releaseDate}</td>
 
-                    <c:if test="${user.role eq 'user'}">
+                    <c:if test="${user.role == 'USER'}">
                         <td><a href="#" id="abonement"
-                               onclick="document.getElementById('action').value = 'abonement';
+                               onclick="document.getElementById('action').value = 'ABONEMENT';
                                        document.getElementById('bookId').value = '${book.id}';
                                        document.getElementById('bookForm').submit();">
                             <spring:message code="abonement"/>
                         </a></td>
                         <td><a href="#" id="library hall"
-                               onclick="document.getElementById('action').value = 'library hall';
+                               onclick="document.getElementById('action').value = 'LIBRARY_HALL';
                                        document.getElementById('bookId').value = '${book.id}';
                                        document.getElementById('bookForm').submit();">
                             <spring:message code="library.hall"/>

@@ -69,7 +69,7 @@ public class OrderController {
         Order order = new Order(0, userByEmail, book, bookSpot, Status.EXPECTED, returnDate);
         orderService.create(order);
 
-        return "redirect:order";
+        return "redirect:orders";
     }
 
 }

@@ -26,7 +26,7 @@
 
     Email : ${user.email}<br>
     Password : ${user.password}<br>
-    Gender : ${user.sex}<br>
+    Gender : ${user.gender}<br>
     Phone number: ${user.phone}<br>
     Role : ${user.role}<br>
 

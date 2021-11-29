@@ -46,39 +46,39 @@
         <c:forEach items="${orders}" var="order" varStatus="loop">
         <tr>
             <td>${loop.count}</td>
-            <td>${order.userData.userName}</td>
-            <td>${order.bookData.bookName}</td>
+            <td>${order.user.name}</td>
+            <td>${order.book.bookName}</td>
             <td>
-                <c:if test="${order.bookSpot eq 'abonement'}">
+                <c:if test="${order.bookSpot == 'ABONEMENT'}">
                 <spring:message code="abonement"/>
             </c:if>
-                <c:if test="${order.bookSpot eq 'library hall'}">
+                <c:if test="${order.bookSpot == 'LIBRARY_HALL'}">
                     <spring:message code="library.hall"/>
                 </c:if>
             </td>
-            <td><c:if test="${order.status eq 'expected'}">
+            <td><c:if test="${order.status == 'EXPECTED'}">
                 <spring:message code="expected"/>
             </c:if>
-                <c:if test="${order.status eq 'checked out'}">
+                <c:if test="${order.status == 'CHECKED_OUT'}">
                     <spring:message code="checked.out"/>
                 </c:if>
-                <c:if test="${order.status eq 'returned'}">
+                <c:if test="${order.status == 'RETURNED'}">
                     <spring:message code="returned"/>
                 </c:if>
             </td>
             <td>${order.returnDate}</td>
             <td>
-                <c:if test="${order.status eq 'expected'}">
+                <c:if test="${order.status == 'EXPECTED'}">
                 <a href="#" id="checked out"
-                   onclick="document.getElementById('action').value = 'checked out';
+                   onclick="document.getElementById('action').value = 'CHECKED_OUT';
                    document.getElementById('orderId').value = ${order.id};
                            document.getElementById('bookForm').submit();">
                     <spring:message code="check.out"/>
                 </a>
                 </c:if>
-                <c:if test="${order.status  eq 'checked out'}">
+                <c:if test="${order.status  == 'CHECKED_OUT'}">
                     <a href="#" id="checked out"
-                       onclick="document.getElementById('action').value = 'returned';
+                       onclick="document.getElementById('action').value = 'RETURNED';
                                document.getElementById('orderId').value = ${order.id};
                                document.getElementById('bookForm').submit();">
                         <spring:message code="returned"/>

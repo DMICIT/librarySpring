@@ -44,30 +44,30 @@
     <c:forEach items="${allOrdersByUser}" var="order" varStatus="loop">
         <tr>
         <td>${loop.count}</td>
-        <td>${order.bookData.bookName}</td>
+        <td>${order.book.bookName}</td>
         <td>
-            <c:if test="${order.bookSpot eq 'abonement'}">
+            <c:if test="${order.bookSpot == 'ABONEMENT'}">
             <spring:message code="abonement"/>
         </c:if>
-            <c:if test="${order.bookSpot eq 'library hall'}">
+            <c:if test="${order.bookSpot == 'LIBRARY_HALL'}">
                 <spring:message code="library.hall"/>
             </c:if>
 </td>
         <td>
-            <c:if test="${order.status eq 'expected'}">
+            <c:if test="${order.status == 'EXPECTED'}">
                 <spring:message code="expected"/>
             </c:if>
-            <c:if test="${order.status eq 'checked out'}">
+            <c:if test="${order.status == 'CHECKED_OUT'}">
                 <spring:message code="checked.out"/>
             </c:if>
-            <c:if test="${order.status eq 'returned'}">
+            <c:if test="${order.status eq 'RETURNED'}">
                 <spring:message code="returned"/>
             </c:if>
         </td>
         <td>${order.returnDate}</td>
-           <c:if test="${not empty order.penaltyData}">
-               <td>${order.penaltyData.penaltyCost}</td>
-           </c:if>
+<%--           <c:if test="${not empty order.penaltyData}">--%>
+<%--               <td>${order.penaltyData.penaltyCost}</td>--%>
+<%--           </c:if>--%>
 
         </tr>
         </c:forEach>

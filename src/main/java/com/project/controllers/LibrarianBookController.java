@@ -2,6 +2,7 @@ package com.project.controllers;
 
 import com.project.entities.Order;
 import com.project.entities.User;
+import com.project.enums.Role;
 import com.project.enums.Status;
 import com.project.services.OrderService;
 import com.project.services.UserService;
@@ -33,7 +34,7 @@ public class LibrarianBookController {
 
     @GetMapping (value = "/user-list")
     public String getAllUsers(HttpServletRequest request){
-        List<User> users = userService.getAllUsers();
+        List<User> users = userService.getUsersByRole(Role.USER);
         request.setAttribute("allUsers", users);
         return "user-list";
     }
@@ -43,7 +44,7 @@ public class LibrarianBookController {
         int userId = Integer.parseInt(request.getParameter("userId"));
         List<Order> allOrdersByUser = orderService.getAllOrdersByUser(userId);
         User userById = userService.findUserById(userId);
-        request.setAttribute("user", userById );
+        request.setAttribute("userAbonement", userById );
         request.setAttribute("ordersByUser", allOrdersByUser);
     return "user-abonement";
     }

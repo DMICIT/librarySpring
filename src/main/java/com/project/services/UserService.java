@@ -46,6 +46,7 @@ public class UserService {
         user.setPassword(form.getPassword());
         user.setPhone(form.getPhone());
         user.setRole(role);
+
         return createUser(user);
     }
 
@@ -54,7 +55,7 @@ public class UserService {
     }
 
     public void deleteUser(int id) {
-        User user = userRepository.findById(id).get();
+        User user = userRepository.getById(id);
         if (user.getRole() == Role.LIBRARIAN) {
             userRepository.delete(user);
         }
@@ -62,7 +63,7 @@ public class UserService {
 
 
     public void banUser(int id, boolean value) {
-        User user = userRepository.findById(id).get();
+        User user = userRepository.getById(id);
         user.setBanList(value);
         userRepository.save(user);
     }
@@ -72,6 +73,6 @@ public class UserService {
     }
 
     public User findUserById (int id){
-        return userRepository.findById(id).get();
+        return userRepository.getById(id);
     }
 }

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,15 +42,15 @@ public class LoginController {
         User userByEmail = userService.getUserByEmail(loginForm.getEmail());
 
         if (userByEmail == null) {
-            request.setAttribute("errorMessages", "User not found, please register");
-            return "redirect:registration";
+            errors.addError(new ObjectError("formErrors", new String[]{"user.not.exist"}, null, "User not exist"));
+            return "login";
         }
         if (!userByEmail.getPassword().equals(loginForm.getPassword())) {
-            request.setAttribute("errorMessages", Collections.singletonList("error.wrong.password"));
-            return "login.jsp";
+            errors.addError(new ObjectError("formErrors", new String[]{"password.not.correct"}, null, "Incorrect login or password"));
+            return "login";
         }
         if (userByEmail.isBanList()){
-            return "ban-page.jsp";
+            return "ban-page";
         }
 
         HttpSession session = request.getSession();
