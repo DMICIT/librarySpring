@@ -39,6 +39,6 @@ INSERT INTO catalog ( book_id, count) VALUES ( 2, 20);
 INSERT INTO catalog ( book_id, count) VALUES ( 21, 11);
 
 
-INSERT INTO orders (book_id,user_id, book_spot, status, return_date) VALUES ( 2, 2, 'ABONEMENT', 'CHECKED_OUT', '2021-12-11');
+INSERT INTO orders (book_id,user_id, book_spot, status, return_date) VALUES ( 2, 3, 'ABONEMENT', 'CHECKED_OUT', '2021-12-11');
 
 

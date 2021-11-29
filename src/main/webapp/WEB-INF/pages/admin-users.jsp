@@ -22,9 +22,9 @@
 <c:import url="components/header.jsp"/>
 <div class="container">
 
-    <h2><c:if test="${role eq 'LIBRARIAN'}">
+    <h2><c:if test="${role == 'LIBRARIAN'}">
         <spring:message code="users.librarian"/></c:if>
-        <c:if test="${role eq 'USER'}">
+        <c:if test="${role == 'USER'}">
             <spring:message code="users.header"/></c:if>
     </h2>
     <form action="admin-users" method="post" id="userForm" role="form">
@@ -53,10 +53,10 @@
                     <td>${user.name}</td>
                     <td>${user.email}</td>
                     <td>
-                        <c:if test="${user.sex eq 'man'}">
+                        <c:if test="${user.gender == 'MAN'}">
                             <spring:message code="sex.man"/>
                         </c:if>
-                        <c:if test="${user.sex eq 'woman'}">
+                        <c:if test="${user.gender == 'WOMAN'}">
                             <spring:message code="sex.woman"/>
                         </c:if>
                             </td>
@@ -70,23 +70,25 @@
                             <a href="#" id="delete"
                                onclick="document.getElementById('action').value = 'delete';
                                        document.getElementById('userId').value = '${user.id}';
+                                       document.getElementById('userForm').action = '/admin-delete-librarian';
                                        document.getElementById('userForm').submit();">
                                 <spring:message code="delete"/>
                             </a>
                         </c:if>
-                        <c:if test="${role eq 'USER' && user.banList eq 0}">
+                        <c:if test="${role == 'USER' && user.banList eq false}">
                             <a href="#" id="ban"
                                onclick="document.getElementById('action').value = 'ban';
                                        document.getElementById('userId').value = '${user.id}';
+                                       document.getElementById('userForm').action = '/admin-ban-user';
                                        document.getElementById('userForm').submit();">
                                 <spring:message code="ban"/>
                             </a>
                         </c:if>
-                        <c:if test="${role eq 'USER' && user.banList eq 1}">
+                        <c:if test="${role == 'USER' && user.banList eq true}">
                             <a href="#" id="unban"
                                onclick="document.getElementById('action').value = 'unban';
                                        document.getElementById('userId').value = '${user.id}';
-                                       document.getElementById('userForm').action.value = '/admin-unban-user';
+                                       document.getElementById('userForm').action = '/admin-unban-user';
                                        document.getElementById('userForm').submit();">
                                 <spring:message code="unban"/>
                             </a>
@@ -99,7 +101,7 @@
 
     </form>
     <c:if test="${role eq 'LIBRARIAN'}">
-        <a href="admin-add-user" class="btn btn-primary btn-md">   <spring:message code="add"/> </a></c:if>
+        <a href="admin-add-librarian" class="btn btn-primary btn-md">   <spring:message code="add"/> </a></c:if>
 </div>
 <c:import url="components/footer.jsp"/>
 </body>

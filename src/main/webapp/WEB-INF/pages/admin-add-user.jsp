@@ -2,6 +2,7 @@
 <%@ taglib prefix="custom" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
@@ -24,33 +25,38 @@
 <div class="container">
 
     <h2><spring:message code="users.librarian"/></h2>
-    <form action="admin-add-user" method="post" id="userForm" role="form">
-        <c:if test="${empty action}">
-            <c:set var="action" value="add"/>
-        </c:if>
-        <input type="hidden" id="action" name="action" value="${action}">
+    <form:form action="admin-add-librarian" method="post" id="userForm" role="form" modelAttribute = "adminAddLibrarianForm">
 
         <div class="form-group col-xs-4">
-            <label for="name" class="control-label col-xs-4"><spring:message code="users.name"/></label>
-            <input type="text" name="name" id="name" class="form-control" required>
+            <form:label path="name" class="control-label col-xs-4"><spring:message code="users.name"/></form:label>
+            <form:input type="text" path="name" class="form-control" required="true"/>
+            <form:errors path="name" cssClass="text-danger"/>
 
-            <label for="email" class="control-label col-xs-4"><spring:message code="users.email"/></label>
-            <input type="text" name="email" id="email" class="form-control" required>
 
-            <label for="sex" class="control-label col-xs-4"><spring:message code="users.sex"/></label>
-            <input type="text" name="sex" id="sex" class="form-control" required>
+            <form:label path="email" class="control-label col-xs-4"><spring:message code="users.email"/></form:label>
+            <form:input type="text" path="email"  class="form-control" required="true"/>
+            <form:errors path="email" cssClass="text-danger"/>
 
-            <label for="phone" class="control-label col-xs-4"><spring:message code="users.phone"/></label>
-            <input type="text" name="phone" id="phone" class="form-control" required>
 
-            <label for="password" class="control-label col-xs-4"><spring:message code="users.password"/></label>
-            <input type="text" name="password" id="password" class="form-control" required>
+            <form:label path="gender" class="control-label col-xs-4"><spring:message code="users.sex"/></form:label>
+            <form:input type="text" path="gender" class="form-control" required="true"/>
+            <form:errors path="gender" cssClass="text-danger"/>
+
+
+            <form:label path="phone" class="control-label col-xs-4"><spring:message code="users.phone"/></form:label>
+            <form:input type="text" path="phone" class="form-control" required="true"/>
+            <form:errors path="phone" cssClass="text-danger"/>
+
+
+            <form:label path="password" class="control-label col-xs-4"><spring:message code="users.password"/></form:label>
+            <form:input type="text" path="password"  class="form-control" required="true"/>
+            <form:errors path="password" cssClass="text-danger"/>
+
             </br>
             <button type="submit" class="btn btn-primary btn-md"><spring:message code="accept"/></button>
         </div>
-    </form>
+    </form:form>
 
-    <custom:tags errorMessages="${errorMessages}" bundle="${bundle}" locale="${locale}"></custom:tags>
 </div>
 <c:import url="components/footer.jsp"/>
 </body>

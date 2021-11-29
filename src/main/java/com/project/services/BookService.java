@@ -44,7 +44,12 @@ public class BookService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date = LocalDate.parse(form.getReleaseDate(), formatter);
 
-        Book book = new Book(form.getBookId(), form.getAuthor(), form.getBookName(), form.getBookEdition(), date);
+        Book book = new Book();
+        book.setId(form.getBookId());
+        book.setBookEdition(form.getBookEdition());
+        book.setBookName(form.getBookName());
+        book.setAuthor(form.getAuthor());
+        book.setReleaseDate(date);
         bookRepository.save(book);
 
         Catalog catalogByBookId = catalogRepository.findCatalogByBookId(form.getBookId());

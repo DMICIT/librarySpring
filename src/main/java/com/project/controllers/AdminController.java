@@ -6,9 +6,10 @@ import com.project.entities.User;
 import com.project.enums.Role;
 import com.project.forms.AdminAddLibrarianForm;
 import com.project.forms.AdminEditBookForm;
-import com.project.forms.RegistrationForm;
 import com.project.services.BookService;
 import com.project.services.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +19,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.sql.Date;
 import java.util.List;
 
 @Controller
 public class AdminController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(AdminController.class);
 
     @Resource
     private UserService userService;
@@ -75,15 +77,18 @@ public class AdminController {
     }
 
     @GetMapping(value = "/admin-add-librarian")
-    public String adminAddUserPage() {
+    public String adminAddUserPage(AdminAddLibrarianForm adminAddLibrarianForm) {
         return "admin-add-user";
     }
 
     @PostMapping(value = "/admin-add-librarian")
-    public String addLibrarianByAdmin(HttpServletRequest request, @Valid @ModelAttribute RegistrationForm form, BindingResult errors) {
+    public String addLibrarianByAdmin( @Valid @ModelAttribute AdminAddLibrarianForm form, BindingResult errors) {
 
+        if (errors.hasErrors()){
+            return "admin-add-user";
+        }
         Role role = Role.LIBRARIAN;
-        User user = userService.createUserfromForm(form, role);
+        User user = userService.createUserFromForm(form, role);
 
         return "redirect:admin-librarians";
     }
@@ -115,6 +120,7 @@ public class AdminController {
 
     @PostMapping(value = "/admin-ban-user")
     public String adminBanUser(HttpServletRequest request){
+        LOG.info("Ban page");
         int userId = Integer.parseInt(request.getParameter("userId"));
         userService.banUser(userId, true);
         return "redirect:admin-users" ;

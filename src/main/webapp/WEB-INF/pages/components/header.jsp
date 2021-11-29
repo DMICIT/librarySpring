@@ -33,23 +33,17 @@
             </c:choose>
 
             <c:if test="${user.role == 'USER'}">
-                <li><a href="${contextPath}/orders" class="nav-link px-2 link-dark"><fmt:message
-                        key="header.orders"/></a></li>
-                <li><a href="${contextPath}/personal-account" class="nav-link px-2 link-dark"><fmt:message
-                        key="header.account"/></a></li>
+                <li><a href="${contextPath}/orders" class="nav-link px-2 link-dark"><spring:message code="header.orders"/></a></li>
+                <li><a href="${contextPath}/personal-account" class="nav-link px-2 link-dark"><spring:message code="header.account"/></a></li>
             </c:if>
             <c:if test="${user.role == 'LIBRARIAN'}">
-                <li><a href="${contextPath}/librarian-orders" class="nav-link px-2 link-dark"><fmt:message
-                        key="orders.orders"/></a></li>
-                <li><a href="${contextPath}/user-list" class="nav-link px-2 link-dark"><fmt:message
-                        key="users.header"/></a></li>
+                <li><a href="${contextPath}/librarian-orders" class="nav-link px-2 link-dark"><spring:message code="orders.orders"/></a></li>
+                <li><a href="${contextPath}/user-list" class="nav-link px-2 link-dark"><spring:message code="users.header"/></a></li>
 
             </c:if>
             <c:if test="${user.role == 'ADMIN'}">
-                <li><a href="${contextPath}/admin-users?type=users" class="nav-link px-2 link-dark"><fmt:message
-                        key="header.users"/></a></li>
-                <li><a href="${contextPath}/admin-users?type=librarians" class="nav-link px-2 link-dark"><fmt:message
-                        key="header.librarians"/></a></li>
+                <li><a href="${contextPath}/admin-users" class="nav-link px-2 link-dark"><spring:message code="header.users"/></a></li>
+                <li><a href="${contextPath}/admin-librarians" class="nav-link px-2 link-dark"><spring:message code="header.librarians"/></a></li>
             </c:if>
         </ul>
 

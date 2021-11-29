@@ -1,6 +1,7 @@
 package com.project.forms;
 
 
+import com.project.enums.Gender;
 import lombok.*;
 
 import javax.validation.constraints.Email;
@@ -25,7 +26,7 @@ public class AdminAddLibrarianForm {
     private String email;
 
     @NotNull
-    private String sex;
+    private Gender gender;
 
     @NotNull
     private String phone;

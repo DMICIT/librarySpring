@@ -31,7 +31,7 @@ public class RegistrationController {
 
         User userByEmail = userService.getUserByEmail(registrationForm.getEmail());
         if(userByEmail == null) {
-            userService.createUserfromForm(registrationForm, Role.USER);
+            userService.createUserFromForm(registrationForm, Role.USER);
             return "redirect:login";
         }
 

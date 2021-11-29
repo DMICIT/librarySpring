@@ -2,6 +2,7 @@ package com.project.services;
 
 import com.project.entities.User;
 import com.project.enums.Role;
+import com.project.forms.AdminAddLibrarianForm;
 import com.project.forms.RegistrationForm;
 import com.project.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -24,13 +25,26 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User createUserfromForm(RegistrationForm form, Role role) {
+    public User createUserFromForm(RegistrationForm form, Role role) {
+
+        User user = new User();
+        user.setName(form.getName());
+        user.setEmail(form.getEmail());
+        user.setGender(form.getGender());
+        user.setPhone(form.getPhone());
+        user.setPassword(form.getPassword());
+        user.setRole(role);
+        return createUser(user);
+    }
+
+    public User createUserFromForm(AdminAddLibrarianForm form, Role role) {
 
         User user = new User();
         user.setName(form.getName());
         user.setEmail(form.getEmail());
         user.setGender(form.getGender());
         user.setPassword(form.getPassword());
+        user.setPhone(form.getPhone());
         user.setRole(role);
         return createUser(user);
     }
@@ -50,7 +64,7 @@ public class UserService {
     public void banUser(int id, boolean value) {
         User user = userRepository.findById(id).get();
         user.setBanList(value);
-
+        userRepository.save(user);
     }
 
     public List<User> getAllUsers(){
