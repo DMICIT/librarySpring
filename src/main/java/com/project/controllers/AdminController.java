@@ -52,17 +52,22 @@ public class AdminController {
         if (id != null) {
             int bookId = Integer.parseInt(id);
             BookData book = bookService.getBookById(bookId);
-            request.setAttribute("book", book);
+            adminEditBookForm.setBookId(book.getId());
+            adminEditBookForm.setAuthor(book.getAuthor());
+            adminEditBookForm.setBookName(book.getBookName());
+            adminEditBookForm.setBookEdition(book.getBookEdition());
+            adminEditBookForm.setReleaseDate(book.getReleaseDate().toString());
+            adminEditBookForm.setCount(book.getCatalogData().getTotalQuantity());
             request.setAttribute("action", "edit");
         }
         return "admin-edit-book";
     }
 
     @PostMapping(value = "/admin-edit-book")
-    public String adminEditBook(HttpServletRequest request, @Valid @ModelAttribute AdminEditBookForm form) {
-        if (form.getBookId() != 0) {
-            BookData book = bookService.getBookById(form.getBookId());
-            request.setAttribute("book", book);
+    public String adminEditBook(HttpServletRequest request, @Valid @ModelAttribute AdminEditBookForm form, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()){
+            return "admin-edit-book";
         }
         bookService.editBook(form);
 

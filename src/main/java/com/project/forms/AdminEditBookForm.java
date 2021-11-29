@@ -14,14 +14,14 @@ import javax.validation.constraints.Pattern;
 
 public class AdminEditBookForm {
 
-    private int bookId;
+    private int bookId = 0;
 
     @NotNull
-    @Pattern(regexp ="[A-Za-zА-Яа-я0-9- ]*")
+    @Pattern(regexp ="[A-Za-zА-Яа-я0-9.,()!?' -]*")
     private String author;
 
     @NotNull
-    @Pattern(regexp = "[A-Za-zА-Яа-я0-9_.,()!?' -]")
+    @Pattern(regexp = "[A-Za-zА-Яа-я0-9_.,()!?' -]*")
     private String bookName;
 
     @NotNull

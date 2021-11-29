@@ -20,33 +20,33 @@
 
     <h2><spring:message code="books.header"/></h2>
 
-    <form:form action="admin-edit-book${not empty book.id ? '?id=' += book.id : ''}" method="post" id="bookForm" role ="form" modelAttribute = "adminEditBookForm">
+    <form:form action="admin-edit-book" method="post" id="bookForm" role ="form" modelAttribute = "adminEditBookForm">
 
-        <input type="hidden" id ="bookId" name ="bookId" value="${book.id}">
+        <form:input type="hidden" path ="bookId" />
 
         <div class ="form-group col-xs-4">
             <form:label path="author" class="control-label col-xs-4"><spring:message code="books.author"/></form:label>
-            <form:input type = "text" path = "author" class="form-control" value ="${book.author}" required="true"/>
+            <form:input type = "text" path = "author" class="form-control"  required="true"/>
             <form:errors path="author" cssClass="text-danger"/>
 
 
             <form:label path="bookName" class="control-label col-xs-4"><spring:message code="books.book.name"/></form:label>
-            <form:input type = "text" path = "bookName" class="form-control" value ="${book.bookName}" required="true"/>
+            <form:input type = "text" path = "bookName" class="form-control" required="true"/>
             <form:errors path="bookName" cssClass="text-danger"/>
 
 
             <form:label path="bookEdition" class="control-label col-xs-4"><spring:message code="books.edition"/></form:label>
-            <form:input type = "text" path = "bookEdition" class="form-control" value ="${book.bookEdition}" required="true"/>
+            <form:input type = "text" path = "bookEdition" class="form-control" required="true"/>
             <form:errors path="bookEdition" cssClass="text-danger"/>
 
 
             <form:label path="releaseDate" class="control-label col-xs-4"><spring:message code="books.date.of.reliase"/></form:label>
-            <form:input type = "text" path = "releaseDate" class="form-control" value ="${book.releaseDate}" required="true"/>
+            <form:input type = "text" path = "releaseDate" class="form-control" required="true"/>
             <form:errors path="releaseDate" cssClass="text-danger"/>
 
 
             <form:label path="count" class="control-label col-xs-4"><spring:message code="count"/></form:label>
-            <form:input type = "text" path = "count" class="form-control" value ="${book.catalogData.totalQuantity}" required="true"/>
+            <form:input type = "text" path = "count" class="form-control"  required="true"/>
             <form:errors path="count" cssClass="text-danger"/>
 
             </br>

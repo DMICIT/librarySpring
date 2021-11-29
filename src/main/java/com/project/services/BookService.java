@@ -41,7 +41,7 @@ public class BookService {
 
     public void editBook(AdminEditBookForm form) {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date = LocalDate.parse(form.getReleaseDate(), formatter);
 
         Book book = new Book(form.getBookId(), form.getAuthor(), form.getBookName(), form.getBookEdition(), date);
