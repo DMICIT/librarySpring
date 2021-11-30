@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -32,7 +31,7 @@ public class LoginController {
     }
 
     @PostMapping(value="/login")
-    public String loginUser(HttpServletRequest request, @Valid @ModelAttribute LoginForm loginForm, BindingResult errors){
+    public String loginUser( HttpSession session, @Valid @ModelAttribute LoginForm loginForm, BindingResult errors){
 
         LOG.info("Form: {}, errors: {}", loginForm, errors);
         if (errors.hasErrors()){
@@ -52,7 +51,6 @@ public class LoginController {
             return "ban-page";
         }
 
-        HttpSession session = request.getSession();
         UserPrincipal userPrincipal = new UserPrincipal(userByEmail.getEmail(),userByEmail.getRole());
         session.setAttribute("user", userPrincipal);
 

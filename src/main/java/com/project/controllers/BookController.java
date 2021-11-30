@@ -9,10 +9,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+
 
 @Controller
 public class BookController {
@@ -21,26 +21,15 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping(value = "/books")
-    public String bookPage(Model model, HttpServletRequest request) {
-        String search = request.getParameter("search");
-        String sortParam = "id";
-        String order = "asc";
-        int pageSize = 7;
-        int page = 0;
+    public String bookPage(Model model,
+                           @RequestParam (required = false) String search,
+                           @RequestParam(defaultValue = "id", name = "sort")String sortParam,
+                           @RequestParam(defaultValue = "asc") String order,
+                           @RequestParam(defaultValue = "7", name = "pageSize") Integer pageSize,
+                           @RequestParam(defaultValue = "0", name = "page") Integer page) {
 
-        if (request.getParameter("sort") != null){
-            sortParam = request.getParameter("sort");
-        }
-        if (request.getParameter("order") != null){
-            order= request.getParameter("order");
-        }
 
         Sort sort = Sort.by(Sort.Direction.fromString(order), sortParam);
-
-        if (request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));
-        }
-
         Pageable pageable = PageRequest.of(page, pageSize ,sort);
         Page<BookData> bookDataPage;
 

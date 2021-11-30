@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -27,7 +26,7 @@ public class RegistrationController {
     }
 
     @PostMapping(value= "/registration")
-    public String userRegistration(HttpServletRequest request, @Valid @ModelAttribute RegistrationForm registrationForm ,BindingResult errors){
+    public String userRegistration( @Valid @ModelAttribute RegistrationForm registrationForm ,BindingResult errors){
 
         if (errors.hasErrors()){
             return "registration";

@@ -15,13 +15,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -36,48 +37,35 @@ public class AdminController {
     private BookService bookService;
 
     @GetMapping(value = "/admin-books")
-    public String adminGetBook(HttpServletRequest request) {
-
-
-        String sortParam = "id";
-        String order = "asc";
-        int pageSize = 7;
-        int page = 1;
-
-        if (request.getParameter("sort") != null){
-            sortParam = request.getParameter("sort");
-        }
-        if (request.getParameter("order") != null){
-            order= request.getParameter("order");
-        }
+    public String adminGetBook(Model model,
+                               @RequestParam(defaultValue = "id", name = "sort") String sortParam,
+                               @RequestParam(defaultValue = "asc") String order,
+                               @RequestParam(defaultValue = "7", name = "pageSize") Integer pageSize,
+                               @RequestParam(defaultValue = "0", name = "page") Integer page) {
 
         Sort sort = Sort.by(Sort.Direction.fromString(order), sortParam);
-        if (request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));
-        }
 
-        Pageable pageable = PageRequest.of(page, pageSize ,sort);
+        Pageable pageable = PageRequest.of(page, pageSize, sort);
         Page<BookData> books = bookService.findAllBooks(pageable);
-        request.setAttribute("booksData", books);
+        model.addAttribute("booksData", books);
 
         return "admin-books";
     }
 
     @PostMapping(value = "/admin-delete-book")
-    public String adminDeleteBooks(HttpServletRequest request) {
-        int bookid = Integer.parseInt(request.getParameter("bookId"));
+    public String adminDeleteBooks(@RequestParam(defaultValue = "0", name = "bookId") Integer bookId) {
         Book book = new Book();
-        book.setId(bookid);
+        book.setId(bookId);
         bookService.deleteBook(book);
 
         return "redirect:admin-books";
     }
 
     @GetMapping(value = "/admin-edit-book")
-    public String adminBookEdit(HttpServletRequest request, AdminEditBookForm adminEditBookForm) {
-        String id = request.getParameter("id");
-        if (id != null) {
-            int bookId = Integer.parseInt(id);
+    public String adminBookEdit(Model model, AdminEditBookForm adminEditBookForm,
+                                @RequestParam(defaultValue = "0", name = "id") Integer id) {
+        if (id != 0) {
+            int bookId = id;
             BookData book = bookService.getBookById(bookId);
             adminEditBookForm.setBookId(book.getId());
             adminEditBookForm.setAuthor(book.getAuthor());
@@ -85,15 +73,15 @@ public class AdminController {
             adminEditBookForm.setBookEdition(book.getBookEdition());
             adminEditBookForm.setReleaseDate(book.getReleaseDate().toString());
             adminEditBookForm.setCount(book.getCatalogData().getTotalQuantity());
-            request.setAttribute("action", "edit");
+            model.addAttribute("action", "edit");
         }
         return "admin-edit-book";
     }
 
     @PostMapping(value = "/admin-edit-book")
-    public String adminEditBook(HttpServletRequest request, @Valid @ModelAttribute AdminEditBookForm form, BindingResult bindingResult) {
+    public String adminEditBook(@Valid @ModelAttribute AdminEditBookForm form, BindingResult bindingResult) {
 
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "admin-edit-book";
         }
         bookService.editBook(form);
@@ -107,9 +95,9 @@ public class AdminController {
     }
 
     @PostMapping(value = "/admin-add-librarian")
-    public String addLibrarianByAdmin( @Valid @ModelAttribute AdminAddLibrarianForm form, BindingResult errors) {
+    public String addLibrarianByAdmin(@Valid @ModelAttribute AdminAddLibrarianForm form, BindingResult errors) {
 
-        if (errors.hasErrors()){
+        if (errors.hasErrors()) {
             return "admin-add-user";
         }
         Role role = Role.LIBRARIAN;
@@ -119,46 +107,43 @@ public class AdminController {
     }
 
     @GetMapping(value = "/admin-users")
-    public String adminUsers(HttpServletRequest request) {
+    public String adminUsers(Model model) {
         List<User> users = userService.getUsersByRole(Role.USER);
-        request.setAttribute("users", users);
-        request.setAttribute("role", Role.USER);
+        model.addAttribute("users", users);
+        model.addAttribute("role", Role.USER);
         return "admin-users";
     }
+
     @GetMapping(value = "/admin-librarians")
-    public String adminLibrarians(HttpServletRequest request) {
+    public String adminLibrarians(Model model) {
         List<User> librarians = userService.getUsersByRole(Role.LIBRARIAN);
-        request.setAttribute("users", librarians);
-        request.setAttribute("role", Role.LIBRARIAN);
+        model.addAttribute("users", librarians);
+        model.addAttribute("role", Role.LIBRARIAN);
         return "admin-users";
     }
 
 
     @PostMapping(value = "/admin-delete-librarian")
-    public String adminDeleteLibrarian(HttpServletRequest request)  {
+    public String adminDeleteLibrarian(@RequestParam(defaultValue = "0", name = "userId") Integer userId) {
 
-       int userId = Integer.parseInt(request.getParameter("userId"));
-       userService.deleteUser(userId);
+        userService.deleteUser(userId);
 
-       return "redirect:admin-librarians" ;
+        return "redirect:admin-librarians";
     }
 
     @PostMapping(value = "/admin-ban-user")
-    public String adminBanUser(HttpServletRequest request){
+    public String adminBanUser(@RequestParam(defaultValue = "0", name = "userId") Integer userId) {
         LOG.info("Ban page");
-        int userId = Integer.parseInt(request.getParameter("userId"));
         userService.banUser(userId, true);
-        return "redirect:admin-users" ;
+        return "redirect:admin-users";
 
     }
 
     @PostMapping(value = "/admin-unban-user")
-    public String adminUnbanUser(HttpServletRequest request){
-        int userId = Integer.parseInt(request.getParameter("userId"));
+    public String adminUnbanUser(@RequestParam(defaultValue = "0", name = "userId") Integer userId) {
         userService.banUser(userId, false);
-        return "redirect:admin-users" ;
+        return "redirect:admin-users";
     }
-
 
 }
 
