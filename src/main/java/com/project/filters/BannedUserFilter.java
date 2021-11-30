@@ -4,6 +4,8 @@ import com.project.data.UserPrincipal;
 import com.project.entities.User;
 import com.project.services.UserService;
 import lombok.extern.apachecommons.CommonsLog;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.security.Principal;
 
 @Component
 public class BannedUserFilter extends OncePerRequestFilter {
@@ -27,8 +30,11 @@ public class BannedUserFilter extends OncePerRequestFilter {
         HttpSession session = request.getSession();
 
         UserPrincipal userPrincipal = (UserPrincipal) session.getAttribute("user");
-        if (userPrincipal != null) {
-            String email = userPrincipal.getEmail();
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            String email =((UserDetails)principal).getUsername();
             User userByEmail = userService.getUserByEmail(email);
             if (userByEmail.isBanList()) {
                 session.invalidate();
