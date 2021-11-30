@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 
 @Controller
 public class PersonalAccountController {
@@ -18,9 +19,8 @@ public class PersonalAccountController {
     private UserService userService;
 
     @RequestMapping(value = "/personal-account", method = {RequestMethod.GET, RequestMethod.POST})
-    public String getAccountPage(HttpSession session, Model model){
-        UserPrincipal userPrincipal = (UserPrincipal) session.getAttribute("user");
-        User user = userService.getUserByEmail(userPrincipal.getEmail());
+    public String getAccountPage(Principal principal, Model model){
+        User user = userService.getUserByEmail(principal.getName());
         model.addAttribute("user",user);
 
         return "personal-account";

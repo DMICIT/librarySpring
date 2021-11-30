@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="penalties")
-@Getter @Setter @ToString @EqualsAndHashCode @NoArgsConstructor
+@Getter @Setter @ToString @EqualsAndHashCode @NoArgsConstructor @AllArgsConstructor
 
 public class Penalty {
 
@@ -26,4 +26,10 @@ public class Penalty {
     private int penaltyCost;
 
 
+    public Penalty(Order order, User user, int penaltyCost) {
+        this.order = order;
+        this.user = user;
+        this.penaltyCost = penaltyCost;
+
+    }
 }

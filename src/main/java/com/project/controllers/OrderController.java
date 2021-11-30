@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -27,11 +28,10 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping(value = "/orders")
-    public String getOrders( HttpSession session, Model model) {
+    public String getOrders(Principal principal, Model model) {
 
-        UserPrincipal user = (UserPrincipal) session.getAttribute("user");
-        if (user != null) {
-            User userByEmail = userService.getUserByEmail(user.getEmail());
+        if (principal != null) {
+            User userByEmail = userService.getUserByEmail(principal.getName());
             int usersId = userByEmail.getId();
             List<Order> allOrdersByUser = orderService.getAllOrdersByUser(usersId);
 
@@ -41,15 +41,14 @@ public class OrderController {
     }
 
     @PostMapping(value = "/orders")
-    public String createOrder(HttpSession session,
+    public String createOrder(Principal principal,
                               @RequestParam (defaultValue = "0" ,name = "bookId") Integer bookId,
                               @RequestParam (name = "action") BookSpot bookSpot) {
 
-        UserPrincipal userPrincipal = (UserPrincipal) session.getAttribute("user");
-        if (userPrincipal == null) {
+        if (principal == null) {
             return "redirect:login";
         }
-        orderService.create(bookId,userPrincipal,bookSpot);
+        orderService.create(bookId,principal.getName(),bookSpot);
         return "redirect:orders";
     }
 

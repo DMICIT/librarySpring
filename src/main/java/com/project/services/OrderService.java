@@ -25,18 +25,23 @@ public class OrderService {
     @Resource
     private OrderRepository orderRepository;
 
+    public List<Order> findAllOrdersWithPenalty(int userId){
+        List<Order> byUserIdAndStatusAndReturnDateBefore = orderRepository.findByUserIdAndStatusAndReturnDateBefore(userId, Status.CHECKED_OUT, LocalDate.now());
+        return byUserIdAndStatusAndReturnDateBefore;
+    }
+
     public List<Order> getAllOrdersByUser(int userId) {
 
         List<Order> allOrdersByUsersId = orderRepository.findByUserIdAndStatusNot(userId,Status.RETURNED);
         return allOrdersByUsersId;
     }
 
-    public void create(int bookId, UserPrincipal userPrincipal, BookSpot bookSpot){
+    public void create(int bookId, String email, BookSpot bookSpot){
 
         Book book = new Book();
         book.setId(bookId);
 
-        User userByEmail = userService.getUserByEmail(userPrincipal.getEmail());
+        User userByEmail = userService.getUserByEmail(email);
         LocalDate returnDate = null;
 
         if (bookSpot.equals(BookSpot.ABONEMENT)) {

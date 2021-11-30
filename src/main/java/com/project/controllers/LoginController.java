@@ -3,6 +3,7 @@ package com.project.controllers;
 import com.project.data.UserPrincipal;
 import com.project.entities.User;
 import com.project.forms.LoginForm;
+import com.project.services.PenaltyService;
 import com.project.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,13 +25,15 @@ public class LoginController {
 
     @Resource
     private UserService userService;
+    @Resource
+    PenaltyService penaltyService;
 
     @GetMapping(value ="/login")
     public String loginPage(LoginForm loginForm){
         return "login";
     }
 
-    @PostMapping(value="/login")
+    //@PostMapping(value="/login")
     public String loginUser( HttpSession session, @Valid @ModelAttribute LoginForm loginForm, BindingResult errors){
 
         LOG.info("Form: {}, errors: {}", loginForm, errors);
@@ -51,8 +54,11 @@ public class LoginController {
             return "ban-page";
         }
 
+
         UserPrincipal userPrincipal = new UserPrincipal(userByEmail.getEmail(),userByEmail.getRole());
         session.setAttribute("user", userPrincipal);
+
+        penaltyService.checkUserPenalty(userByEmail.getId());
 
         return "redirect:";
 

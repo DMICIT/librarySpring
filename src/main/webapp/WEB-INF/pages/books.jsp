@@ -83,7 +83,7 @@
                     <td>${book.bookEdition}</td>
                     <td>${book.releaseDate}</td>
 
-                    <c:if test="${user.role == 'USER'}">
+                    <security:authorize access="hasAuthority('USER')">
                         <td><a href="#" id="abonement"
                                onclick="document.getElementById('action').value = 'ABONEMENT';
                                        document.getElementById('bookId').value = '${book.id}';
@@ -96,7 +96,8 @@
                                        document.getElementById('bookForm').submit();">
                             <spring:message code="library.hall"/>
                         </a></td>
-                    </c:if>
+                    </security:authorize>
+
                 </tr>
             </c:forEach>
         </table>
