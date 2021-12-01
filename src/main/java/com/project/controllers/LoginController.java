@@ -21,47 +21,10 @@ import javax.validation.Valid;
 @Controller
 public class LoginController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(LoginController.class);
-
-    @Resource
-    private UserService userService;
-    @Resource
-    PenaltyService penaltyService;
-
     @GetMapping(value ="/login")
     public String loginPage(LoginForm loginForm){
         return "login";
     }
 
-    //@PostMapping(value="/login")
-    public String loginUser( HttpSession session, @Valid @ModelAttribute LoginForm loginForm, BindingResult errors){
-
-        LOG.info("Form: {}, errors: {}", loginForm, errors);
-        if (errors.hasErrors()){
-            return "login";
-        }
-        User userByEmail = userService.getUserByEmail(loginForm.getEmail());
-
-        if (userByEmail == null) {
-            errors.addError(new ObjectError("formErrors", new String[]{"user.not.exist"}, null, "User not exist"));
-            return "login";
-        }
-        if (!userByEmail.getPassword().equals(loginForm.getPassword())) {
-            errors.addError(new ObjectError("formErrors", new String[]{"password.not.correct"}, null, "Incorrect login or password"));
-            return "login";
-        }
-        if (userByEmail.isBanList()){
-            return "ban-page";
-        }
-
-
-        UserPrincipal userPrincipal = new UserPrincipal(userByEmail.getEmail(),userByEmail.getRole());
-        session.setAttribute("user", userPrincipal);
-
-        penaltyService.checkUserPenalty(userByEmail.getId());
-
-        return "redirect:";
-
-    }
 
 }
