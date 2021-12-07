@@ -36,7 +36,34 @@ INSERT INTO users ( name, email, gender, phone, role, ban_list, password) VALUES
 
 INSERT INTO catalog ( book_id, count) VALUES ( 1, 32);
 INSERT INTO catalog ( book_id, count) VALUES ( 2, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 3, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 4, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 5, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 6, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 7, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 8, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 9, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 10, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 11, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 12, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 13, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 14, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 15, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 16, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 17, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 18, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 19, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 20, 20);
 INSERT INTO catalog ( book_id, count) VALUES ( 21, 11);
+INSERT INTO catalog ( book_id, count) VALUES ( 22, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 23, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 24, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 25, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 26, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 27, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 28, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 29, 20);
+INSERT INTO catalog ( book_id, count) VALUES ( 30, 20);
 
 
 INSERT INTO orders (book_id,user_id, book_spot, status, return_date) VALUES ( 2, 3, 'ABONEMENT', 'CHECKED_OUT', '2021-12-11');

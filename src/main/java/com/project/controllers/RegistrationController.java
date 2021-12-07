@@ -31,6 +31,12 @@ public class RegistrationController {
         if (errors.hasErrors()){
             return "registration";
         }
+
+        if(!registrationForm.getPassword().equals(registrationForm.getConfirmPassword())){
+            errors.rejectValue("confirmPassword", "error.equals.passwords");
+            return "registration";
+        }
+
         User userByEmail = userService.getUserByEmail(registrationForm.getEmail());
         if(userByEmail == null) {
             userService.createUserFromForm(registrationForm, Role.USER);

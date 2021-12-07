@@ -39,7 +39,10 @@
             </br>
 
             <form:label path="gender" class="control-label col-xs-4"><spring:message code="users.sex"/></form:label>
-            <form:input type="text" path="gender" class="form-control" required="true"/>
+            <form:select class="form-control" path ="gender">
+                <form:option value="MAN"><spring:message code="sex.man"/></form:option>
+                <form:option value="WOMAN"><spring:message code="sex.woman"/></form:option>
+            </form:select>
             <form:errors path="gender" cssClass="text-danger"/>
             </br>
 
